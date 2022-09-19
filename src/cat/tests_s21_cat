@@ -1,0 +1,87 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define s21_size_t unsigned long long
+#define s21_NULL (void*)0
+
+// checkmk tests_s21_cat > tests_s21_cat.c
+// gcc -Wall -Wextra -Werror -lcheck tests_s21_cat.c
+// make; ./a.out
+// #suit s21_
+// #tcase s21_
+// #test test_s21_
+
+int compareFiles(FILE * fPtr1, FILE * fPtr2) {
+    char ch1, ch2;
+    int line = 1;
+    int col  = 0;
+    do {
+        ch1 = fgetc(fPtr1);
+        ch2 = fgetc(fPtr2);
+        if (ch1 == '\n') {
+            line += 1;
+            col = 0;
+        }
+        if (ch1 != ch2)
+            return 1;
+        col += 1;
+    } while (ch1 != EOF && ch2 != EOF);
+    return 0;
+}
+
+#suite s21_cat
+#tcase s21_cat
+#test test_s21_cat_01
+system("./s21_cat test.txt >> test1_s21_cat_res.txt");
+system("cat test.txt >> test1_cat_res.txt");
+FILE *file1 = fopen("test1_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test1_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
+#test test_s21_cat_02
+system("./s21_cat -b test.txt >> test2_s21_cat_res.txt");
+system("cat -b test.txt >> test2_cat_res.txt");
+FILE *file1 = fopen("test2_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test2_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
+#test test_s21_cat_03
+system("./s21_cat -e test.txt >> test3_s21_cat_res.txt");
+system("cat -e test.txt >> test3_cat_res.txt");
+FILE *file1 = fopen("test3_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test3_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
+#test test_s21_cat_04
+system("./s21_cat -n test.txt >> test4_s21_cat_res.txt");
+system("cat -n test.txt >> test4_cat_res.txt");
+FILE *file1 = fopen("test4_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test4_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
+#test test_s21_cat_05
+system("./s21_cat -s test.txt >> test5_s21_cat_res.txt");
+system("cat -s test.txt >> test5_cat_res.txt");
+FILE *file1 = fopen("test5_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test5_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
+#test test_s21_cat_06
+system("./s21_cat -t test.txt >> test6_s21_cat_res.txt");
+system("cat -t test.txt >> test6_cat_res.txt");
+FILE *file1 = fopen("test6_s21_cat_res.txt", "r");
+FILE *file2 = fopen("test6_cat_res.txt", "r");
+int res = compareFiles(file1, file2);
+fclose(file1);
+fclose(file2);
+fail_unless(!res);
